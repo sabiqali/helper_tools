@@ -7,7 +7,7 @@ int main() {
     std::string comp = "|||||||||||||||||||||||||||||||||||||||||  ||||||| ||||||||||| || |*|*|***|*|*|  | |||| |*|****|||||  **|***|***||||| ||||   ||*|*| **|||||||| *|| |*|||||||||||||**";
     std::string cigar = "20I41=2I7=1D13=1X4=1D1X1=1X22=1D32=1I8=1I1X2=1I1=1X13=2X10I";
 
-    int match = 0,ins = 0,del = 0,refi = 0,compi = 0;
+    /*int match = 0,ins = 0,del = 0,refi = 0,compi = 0;
     std::string new_cigar = "";
     for(char& elem : query) {
     	if(ref[refi] == '-' && ((refi < ref.find('A')) || (refi < ref.find('G')) || (refi < ref.find('G')) || (refi < ref.find('C')))) {
@@ -42,9 +42,9 @@ int main() {
 	    compi++;
 	}
     }
-    std::cout<<"\n"<<new_cigar<<"\n";
+    std::cout<<"\n"<<new_cigar<<"\n";*/
 
-    new_cigar = "";
+    std::string new_cigar = "";
     for (char& elem : cigar) {
 	if( elem == '=' || elem == 'X')
 	    elem = 'M';
@@ -63,7 +63,8 @@ int main() {
 			//std::cout<<num_mem1; 
 		}
 		if(new_cigar[i] == 'S') {
-			final_cigar = final_cigar + std::to_string(num_mem1) + "S";
+			if(num_mem2 != 0)
+			    final_cigar = final_cigar + std::to_string(num_mem2) + char_mem2;			
 			num_mem2 = num_mem1;
 			char_mem2 = new_cigar[i];
 			num_mem1 = 0;
@@ -81,6 +82,7 @@ int main() {
 					if(char_mem1)
 				}
 			}*/
+			//std::cout<<num_mem1;
 			if(char_mem2 == new_cigar[i]) {
 				num_mem2 += num_mem1;
 			}
@@ -93,6 +95,7 @@ int main() {
 			num_mem1 = 0;
 		}	
     }
+	final_cigar = final_cigar + std::to_string(num_mem2) + char_mem2;
 
 	std::cout<<"\n"<<final_cigar;
 
